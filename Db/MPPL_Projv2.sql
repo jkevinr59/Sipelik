@@ -1,6 +1,6 @@
 /*
-SQLyog Ultimate v11.33 (64 bit)
-MySQL - 10.1.10-MariaDB : Database - mpplproject
+SQLyog Ultimate v11.11 (64 bit)
+MySQL - 5.5.5-10.1.9-MariaDB : Database - mpplproject
 *********************************************************************
 */
 
@@ -21,11 +21,11 @@ USE `mpplproject`;
 DROP TABLE IF EXISTS `iklan`;
 
 CREATE TABLE `iklan` (
-  `ID_iklan` varchar(10) NOT NULL,
-  `Judul_Iklan` varchar(40) NOT NULL,
-  `Harga` varchar(20) NOT NULL,
-  `Deskripsi_Iklan` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`ID_iklan`)
+  `id_iklan` int(11) NOT NULL AUTO_INCREMENT,
+  `judul_iklan` varchar(40) DEFAULT NULL,
+  `harga` decimal(10,0) DEFAULT NULL,
+  `deskripsi_iklan` varchar(250) DEFAULT NULL,
+  PRIMARY KEY (`id_iklan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `iklan` */
@@ -35,10 +35,10 @@ CREATE TABLE `iklan` (
 DROP TABLE IF EXISTS `produk_ikan`;
 
 CREATE TABLE `produk_ikan` (
-  `ID_Produk` varchar(10) NOT NULL,
-  `Nama_Produk` varchar(40) NOT NULL,
-  `Gambar_produk` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`ID_Produk`)
+  `id_produk` int(11) NOT NULL AUTO_INCREMENT,
+  `nama_produk` varchar(40) DEFAULT NULL,
+  `gambar_produk` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id_produk`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `produk_ikan` */
@@ -48,28 +48,31 @@ CREATE TABLE `produk_ikan` (
 DROP TABLE IF EXISTS `profileuser`;
 
 CREATE TABLE `profileuser` (
-  `ID_User` varchar(10) NOT NULL,
-  `Nama_User` varchar(20) NOT NULL,
-  `Alamat_user` varchar(50) NOT NULL,
-  `No_telp` int(12) NOT NULL,
-  `Alamat_kirim` varchar(50) NOT NULL,
-  `E-mail` varchar(20) NOT NULL,
-  `Username` varchar(12) NOT NULL,
-  `Password` varchar(12) NOT NULL,
-  PRIMARY KEY (`ID_User`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id_user` int(10) NOT NULL AUTO_INCREMENT,
+  `nama_user` varchar(50) DEFAULT NULL,
+  `alamat_user` varchar(50) DEFAULT NULL,
+  `no_telp` varchar(13) DEFAULT NULL,
+  `alamat_kirim` varchar(50) DEFAULT NULL,
+  `email` varchar(20) DEFAULT NULL,
+  `username` varchar(1024) DEFAULT NULL,
+  `password` varchar(1024) DEFAULT NULL,
+  `remenber_token` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id_user`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 /*Data for the table `profileuser` */
+
+insert  into `profileuser`(`id_user`,`nama_user`,`alamat_user`,`no_telp`,`alamat_kirim`,`email`,`username`,`password`,`remenber_token`) values (1,'Afif Ishamsyah','Bekasi','088813568990','Surabaya','afifhan95@gmail.com','minyman','$2y$10$.Z6/KaMCpr7A.nqP3Pd8Xui6mVrylIRVZdO7ZP.Nuh901W2Ce6X/y',NULL);
 
 /*Table structure for table `transaksi` */
 
 DROP TABLE IF EXISTS `transaksi`;
 
 CREATE TABLE `transaksi` (
-  `Id_trans` varchar(10) NOT NULL,
-  `Tanggal_terjual` date NOT NULL,
-  `Pembeli` varchar(12) NOT NULL,
-  PRIMARY KEY (`Id_trans`)
+  `id_transaksi` int(10) NOT NULL AUTO_INCREMENT,
+  `tanggal_terjual` datetime DEFAULT NULL,
+  `pembeli` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id_transaksi`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `transaksi` */
