@@ -1,6 +1,6 @@
 /*
-SQLyog Ultimate v11.33 (64 bit)
-MySQL - 10.1.10-MariaDB : Database - mpplproject
+SQLyog Ultimate v11.11 (64 bit)
+MySQL - 5.5.5-10.1.9-MariaDB : Database - mpplproject
 *********************************************************************
 */
 
@@ -21,73 +21,58 @@ USE `mpplproject`;
 DROP TABLE IF EXISTS `iklan`;
 
 CREATE TABLE `iklan` (
-  `ID_iklan` varchar(10) NOT NULL,
-  `Judul_Iklan` varchar(40) NOT NULL,
-  `Harga` decimal(10,0) NOT NULL,
-  `Deskripsi_Iklan` varchar(100) DEFAULT NULL,
-  `Stock` varchar(1000) DEFAULT NULL,
-  PRIMARY KEY (`ID_iklan`),
-  CONSTRAINT `FK_ID_User` FOREIGN KEY (`ID_iklan`) REFERENCES `profileuser` (`ID_User`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id_iklan` int(11) NOT NULL AUTO_INCREMENT,
+  `judul_iklan` varchar(100) DEFAULT NULL,
+  `harga` decimal(10,0) DEFAULT NULL,
+  `deskripsi_iklan` varchar(250) DEFAULT NULL,
+  `gambar` varchar(100) DEFAULT NULL,
+  `stok` int(100) DEFAULT NULL,
+  `idpenjual` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id_iklan`),
+  KEY `idpenjual` (`idpenjual`),
+  CONSTRAINT `iklan_ibfk_1` FOREIGN KEY (`idpenjual`) REFERENCES `profileuser` (`id_user`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 /*Data for the table `iklan` */
 
-/*Table structure for table `produk_ikan` */
-
-DROP TABLE IF EXISTS `produk_ikan`;
-
-CREATE TABLE `produk_ikan` (
-  `id_produk` int(11) NOT NULL AUTO_INCREMENT,
-  `nama_produk` varchar(40) DEFAULT NULL,
-  `gambar_produk` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id_produk`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-/*Data for the table `produk_ikan` */
+insert  into `iklan`(`id_iklan`,`judul_iklan`,`harga`,`deskripsi_iklan`,`gambar`,`stok`,`idpenjual`) values (1,'ikan_nila',20000,'bagus',NULL,20,1),(2,'cumi',10,'ampas',NULL,5,1);
 
 /*Table structure for table `profileuser` */
 
 DROP TABLE IF EXISTS `profileuser`;
 
 CREATE TABLE `profileuser` (
-  `ID_User` varchar(10) NOT NULL,
-  `Nama_User` varchar(20) NOT NULL,
-  `Alamat_user` varchar(50) NOT NULL,
-  `No_telp` int(12) NOT NULL,
-  `Alamat_kirim` varchar(50) NOT NULL,
-  `E-mail` varchar(20) NOT NULL,
-  `Username` varchar(12) NOT NULL,
-  `Password` varchar(12) NOT NULL,
-  `remember_token` varchar(100) NOT NULL,
-  PRIMARY KEY (`ID_User`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id_user` int(10) NOT NULL AUTO_INCREMENT,
+  `nama_user` varchar(50) DEFAULT NULL,
+  `alamat_user` varchar(50) DEFAULT NULL,
+  `no_telp` varchar(13) DEFAULT NULL,
+  `alamat_kirim` varchar(50) DEFAULT NULL,
+  `email` varchar(20) DEFAULT NULL,
+  `username` varchar(1024) DEFAULT NULL,
+  `password` varchar(1024) DEFAULT NULL,
+  `remenber_token` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id_user`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 /*Data for the table `profileuser` */
 
-/*Table structure for table `testimony` */
-
-DROP TABLE IF EXISTS `testimony`;
-
-CREATE TABLE `testimony` (
-  `Id_testy` varchar(10) NOT NULL,
-  `Judul_Testimony` varchar(20) NOT NULL,
-  `Isi Testimony` varchar(100) NOT NULL,
-  `Score` int(10) NOT NULL,
-  PRIMARY KEY (`Id_testy`),
-  CONSTRAINT `PK_ID_User` FOREIGN KEY (`Id_testy`) REFERENCES `profileuser` (`ID_User`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-/*Data for the table `testimony` */
+insert  into `profileuser`(`id_user`,`nama_user`,`alamat_user`,`no_telp`,`alamat_kirim`,`email`,`username`,`password`,`remenber_token`) values (1,'Afif Ishamsyah','Bekasi','088813568990','Surabaya','afifhan95@gmail.com','minyman','$2y$10$.Z6/KaMCpr7A.nqP3Pd8Xui6mVrylIRVZdO7ZP.Nuh901W2Ce6X/y',NULL),(2,'anwar','bekasi','0888888888','almuslim','anwar@gmaill.com','anwar','$2y$10$Ug8I24zR76D0Nq.HE0IW5.5alH0IoJ9V5CbcDxqNyh4yLjd0Cq2EK',NULL);
 
 /*Table structure for table `transaksi` */
 
 DROP TABLE IF EXISTS `transaksi`;
 
 CREATE TABLE `transaksi` (
-  `Id_trans` varchar(10) NOT NULL,
-  `Tanggal_terjual` datetime NOT NULL,
-  `Pembeli` varchar(12) NOT NULL,
-  PRIMARY KEY (`Id_trans`)
+  `id_transaksi` int(10) NOT NULL AUTO_INCREMENT,
+  `stok` int(10) DEFAULT NULL,
+  `tanggal_terjual` datetime DEFAULT NULL,
+  `idpembeli` int(10) DEFAULT NULL,
+  `idpenjual` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id_transaksi`),
+  KEY `idpembeli` (`idpembeli`),
+  KEY `idpenjual` (`idpenjual`),
+  CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`idpembeli`) REFERENCES `profileuser` (`id_user`),
+  CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`idpenjual`) REFERENCES `profileuser` (`id_user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `transaksi` */
