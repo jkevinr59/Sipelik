@@ -14,7 +14,8 @@ class Iklan extends Model
 	'deskripisi_iklan',
 	'gambar',
 	'stok',
-	'idpenjual'
+	'idpenjual',
+	'status'
 	
     	);
 }

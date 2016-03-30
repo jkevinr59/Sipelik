@@ -2,8 +2,7 @@
 SQLyog Ultimate v11.11 (64 bit)
 MySQL - 5.5.5-10.1.9-MariaDB : Database - mpplproject
 *********************************************************************
-*/
-
+*/
 
 /*!40101 SET NAMES utf8 */;
 
@@ -29,14 +28,15 @@ CREATE TABLE `iklan` (
   `gambar` varchar(100) DEFAULT NULL,
   `stok` int(100) DEFAULT NULL,
   `idpenjual` int(10) DEFAULT NULL,
+  `status` int(1) DEFAULT '1',
   PRIMARY KEY (`id_iklan`),
   KEY `idpenjual` (`idpenjual`),
   CONSTRAINT `iklan_ibfk_1` FOREIGN KEY (`idpenjual`) REFERENCES `profileuser` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 /*Data for the table `iklan` */
 
-insert  into `iklan`(`id_iklan`,`judul_iklan`,`harga`,`deskripsi_iklan`,`gambar`,`stok`,`idpenjual`) values (1,'ikan_nila',20000,'bagus',NULL,20,1),(2,'cumi',10,'ampas',NULL,5,1),(3,'ikan',2000,'gede',NULL,2,NULL);
+insert  into `iklan`(`id_iklan`,`judul_iklan`,`harga`,`deskripsi_iklan`,`gambar`,`stok`,`idpenjual`,`status`) values (1,'ikan nila',20000,'bagus',NULL,20,1,1),(2,'cumi',10,'ampas',NULL,5,2,1),(4,'pari',20000,'beracun',NULL,20,1,1),(5,'nemo',3000,'badut',NULL,5,2,1);
 
 /*Table structure for table `profileuser` */
 
@@ -57,15 +57,14 @@ CREATE TABLE `profileuser` (
 
 /*Data for the table `profileuser` */
 
-insert  into `profileuser`(`id`,`nama_user`,`alamat_user`,`no_telp`,`alamat_kirim`,`email`,`username`,`password`,`remember_token`) values (1,'Afif Ishamsyah','Bekasi','088813568990','Surabaya','afifhan95@gmail.com','minyman','$2y$10$.Z6/KaMCpr7A.nqP3Pd8Xui6mVrylIRVZdO7ZP.Nuh901W2Ce6X/y','JE6ztNprGFwhIGfmu6SCmbMyAr1d10jKD2RoCskQyqXvukrrTl3eJzNxRP8w'),(2,'anwar','bekasi','0888888888','almuslim','anwar@gmaill.com','anwar','$2y$10$Ug8I24zR76D0Nq.HE0IW5.5alH0IoJ9V5CbcDxqNyh4yLjd0Cq2EK','gEO3Nt5CoGGqUeR7iWwteQ2hcMjC7mVwwcJgTmq8xYL5HME7aSRZUiHs4y3T');
+insert  into `profileuser`(`id`,`nama_user`,`alamat_user`,`no_telp`,`alamat_kirim`,`email`,`username`,`password`,`remember_token`) values (1,'Afif Ishamsyah','Bekasi','088813568990','Surabaya','afifhan95@gmail.com','minyman','$2y$10$.Z6/KaMCpr7A.nqP3Pd8Xui6mVrylIRVZdO7ZP.Nuh901W2Ce6X/y','l6xbg7MaBaXuLsGhECTGwd1jHPWtUOOb4ObWp1qRUBjZGjrjUQKApYGCg5Wt'),(2,'anwar','bekasi','0888888888','almuslim','anwar@gmaill.com','anwar','$2y$10$Ug8I24zR76D0Nq.HE0IW5.5alH0IoJ9V5CbcDxqNyh4yLjd0Cq2EK','Y2zQaRGQUEJMTQkZyXrMqMt9g5nO0s34LKIqD7yn7hRbfv8oUq7QMKL70DuT');
 
-/*Table structure for table `testimony` */
+/*Table structure for table `testimoni` */
 
-DROP TABLE IF EXISTS `testimony`;
+DROP TABLE IF EXISTS `testimoni`;
 
-CREATE TABLE `testimony` (
+CREATE TABLE `testimoni` (
   `id_testi` int(10) NOT NULL AUTO_INCREMENT,
-  `judul` varchar(20) DEFAULT NULL,
   `isi` varchar(100) DEFAULT NULL,
   `score` int(10) DEFAULT NULL,
   `id_user` int(10) DEFAULT NULL,
@@ -73,11 +72,11 @@ CREATE TABLE `testimony` (
   PRIMARY KEY (`id_testi`),
   KEY `ibfk_testi_1` (`id_user`),
   KEY `id_iklan` (`id_iklan`),
-  CONSTRAINT `testimony_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `profileuser` (`id`),
-  CONSTRAINT `testimony_ibfk_2` FOREIGN KEY (`id_iklan`) REFERENCES `iklan` (`id_iklan`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CONSTRAINT `testimoni_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `profileuser` (`id`),
+  CONSTRAINT `testimoni_ibfk_2` FOREIGN KEY (`id_iklan`) REFERENCES `iklan` (`id_iklan`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
-/*Data for the table `testimony` */
+/*Data for the table `testimoni` */
 
 /*Table structure for table `transaksi` */
 
@@ -85,15 +84,17 @@ DROP TABLE IF EXISTS `transaksi`;
 
 CREATE TABLE `transaksi` (
   `id_transaksi` int(10) NOT NULL AUTO_INCREMENT,
-  `stok` int(10) DEFAULT NULL,
   `tanggal_terjual` datetime DEFAULT NULL,
   `idpembeli` int(10) DEFAULT NULL,
   `idpenjual` int(10) DEFAULT NULL,
+  `idiklan` int(10) DEFAULT NULL,
   PRIMARY KEY (`id_transaksi`),
   KEY `idpembeli` (`idpembeli`),
-  KEY `idpenjual` (`idpenjual`),
+  KEY `idpenjual` (`idiklan`),
+  KEY `idpenjual_2` (`idpenjual`),
   CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`idpembeli`) REFERENCES `profileuser` (`id`),
-  CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`idpenjual`) REFERENCES `profileuser` (`id`)
+  CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`idiklan`) REFERENCES `iklan` (`id_iklan`),
+  CONSTRAINT `transaksi_ibfk_3` FOREIGN KEY (`idpenjual`) REFERENCES `profileuser` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `transaksi` */

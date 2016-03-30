@@ -37,5 +37,9 @@ Route::group(['middleware' => ['web']], function () {
 	Route::get('iklan','HomeController@iklan');
 	Route::get('tambahbarang','HomeController@tambahbarang');
 	Route::post('tambahbarangproses','HomeController@tambahbarangproses');
-    
+    Route::get('iklan_detail/{id}','HomeController@iklan2');
+    Route::get('testimoni/{id}','HomeController@testimoni');
+    Route::post('testimoniproses','HomeController@testimoniproses');
+    Route::post('transaksi','HomeController@transaksi');
+    Route::get('penjual/{id}','HomeController@penjual');
 });
