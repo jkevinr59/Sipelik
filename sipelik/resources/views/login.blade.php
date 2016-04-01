@@ -41,7 +41,7 @@ error_reporting(0); // Turn off all error reporting
 								<input class="form-control" placeholder="Password" name="password" type="password" value="">
 							</div>
 							{{csrf_field()}}
-						 <button class="btn btn-primary btn btn-block">Daftar</button>
+						 <button class="btn btn-primary btn btn-block">Masuk</button>
 						</fieldset>
 					</form>
 				</div>

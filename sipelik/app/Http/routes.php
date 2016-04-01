@@ -42,4 +42,10 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('testimoniproses','HomeController@testimoniproses');
     Route::post('transaksi','HomeController@transaksi');
     Route::get('penjual/{id}','HomeController@penjual');
+    Route::get('editakun','HomeController@editakun');
+    Route::post('editproses','HomeController@editproses');
+    Route::get('hapusakun/{id}','HomeController@hapusakun');
+    Route::get('editbarang/{id}','HomeController@editbarang');
+    Route::post('editbarangproses','HomeController@editbarangproses');
+    Route::get('hapusbarang/{id}','HomeController@hapusbarang');
 });

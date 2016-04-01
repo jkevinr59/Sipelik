@@ -16,6 +16,7 @@ use App\User;
 use App\Iklan;
 use App\Testimoni;
 use App\Transaksi;
+use App\Profile;
 // use Input;
 
 
@@ -169,6 +170,52 @@ class HomeController extends controller{
     $data['penjual']=DB::table('profileuser')->select('profileuser.*')->where('profileuser.id','=',$id)->get();
     return view('penjual',$data);
   }
+
+  public function editakun(){
+      return view('editakun');
+  }
+
+  public function editproses(){
+    $data=Input::all();
+    if($data['password']==$data['conpassword'])
+    {
+          $pass=bcrypt( $data['password']);
+          DB::table('profileuser')
+            ->where('id', $data['idakun'])
+            ->update(['username' => $data['username'], 'password' => $pass, 'nama_user' => $data['nama'],'alamat_user' => $data['asal'], 'no_telp' => $data['telp'], 'alamat_kirim' => $data['kirim'],'email' => $data['email']]);
+          Session::flash('message','Berhasil edit akun');
+          return redirect('iklan');
+    }
+    else
+    {
+      Session::flash('message','konfirmasi password gagal, akun gagal diedit');
+      return redirect('iklan');
+    }
+  }
+
+  public function hapusakun($id){
+    DB::table('profileuser')->where('profileuser.id','=',$id)->delete();
+    return redirect('logout');
+  }
+
+  public function editbarang($id){
+    return view("editbarang",compact('id'));
+  }
+
+  public function editbarangproses(){
+    $data=Input::all();
+    DB::table('iklan')
+        ->where('id_iklan', $data['idiklan'])
+        ->update(['judul_iklan' => $data['judul'], 'harga' => $data['harga'], 'deskripsi_iklan' => $data['deskripsi'],'stok' => $data['stok']]);
+    Session::flash('message','Berhasil edit barang');
+    return redirect('iklan');
+    }
+
+     public function hapusbarang($id){
+    DB::table('iklan')->where('iklan.id_iklan','=',$id)->delete();
+    return redirect('iklan');
+  }
+
 }
 
 ?>
