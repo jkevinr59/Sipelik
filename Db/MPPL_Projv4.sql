@@ -31,12 +31,12 @@ CREATE TABLE `iklan` (
   `status` int(1) DEFAULT '1',
   PRIMARY KEY (`id_iklan`),
   KEY `idpenjual` (`idpenjual`),
-  CONSTRAINT `iklan_ibfk_1` FOREIGN KEY (`idpenjual`) REFERENCES `profileuser` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+  CONSTRAINT `iklan_ibfk_1` FOREIGN KEY (`idpenjual`) REFERENCES `profileuser` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 /*Data for the table `iklan` */
 
-insert  into `iklan`(`id_iklan`,`judul_iklan`,`harga`,`deskripsi_iklan`,`gambar`,`stok`,`idpenjual`,`status`) values (1,'ikan nila',20000,'bagus',NULL,20,1,1),(2,'cumi',10,'ampas',NULL,5,2,1),(4,'pari',20000,'beracun',NULL,20,1,1),(5,'nemo',3000,'badut',NULL,5,2,1);
+insert  into `iklan`(`id_iklan`,`judul_iklan`,`harga`,`deskripsi_iklan`,`gambar`,`stok`,`idpenjual`,`status`) values (1,'ikan mas',2000,'kecil',NULL,5,1,1),(2,'cumi',10,'ampas',NULL,5,2,1),(4,'pari',20000,'beracun',NULL,20,1,1),(5,'nemo',3000,'badut',NULL,5,2,1);
 
 /*Table structure for table `profileuser` */
 
@@ -53,11 +53,11 @@ CREATE TABLE `profileuser` (
   `password` varchar(1024) NOT NULL,
   `remember_token` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 /*Data for the table `profileuser` */
 
-insert  into `profileuser`(`id`,`nama_user`,`alamat_user`,`no_telp`,`alamat_kirim`,`email`,`username`,`password`,`remember_token`) values (1,'Afif Ishamsyah','Bekasi','088813568990','Surabaya','afifhan95@gmail.com','minyman','$2y$10$.Z6/KaMCpr7A.nqP3Pd8Xui6mVrylIRVZdO7ZP.Nuh901W2Ce6X/y','l6xbg7MaBaXuLsGhECTGwd1jHPWtUOOb4ObWp1qRUBjZGjrjUQKApYGCg5Wt'),(2,'anwar','bekasi','0888888888','almuslim','anwar@gmaill.com','anwar','$2y$10$Ug8I24zR76D0Nq.HE0IW5.5alH0IoJ9V5CbcDxqNyh4yLjd0Cq2EK','Y2zQaRGQUEJMTQkZyXrMqMt9g5nO0s34LKIqD7yn7hRbfv8oUq7QMKL70DuT');
+insert  into `profileuser`(`id`,`nama_user`,`alamat_user`,`no_telp`,`alamat_kirim`,`email`,`username`,`password`,`remember_token`) values (1,'Afif Ishamsyah','Bekasi','081383112806','Surabaya','afifhan95@gmail.com','minyman','$2y$10$kj1xnRHsLJ/ikfFgKGNkSuCkRQg5kSm/QH8LoBpXswATpMBRc7pIi','IiB3gCJJa0GqRMvwMIn3GZBfiyoLpEUGntzFPbibygk6a3AmaK2hn471RfpO'),(2,'anwar','bekasi','0888888888','almuslim','anwar@gmaill.com','anwar','$2y$10$Ug8I24zR76D0Nq.HE0IW5.5alH0IoJ9V5CbcDxqNyh4yLjd0Cq2EK','Y2zQaRGQUEJMTQkZyXrMqMt9g5nO0s34LKIqD7yn7hRbfv8oUq7QMKL70DuT');
 
 /*Table structure for table `testimoni` */
 
@@ -71,10 +71,10 @@ CREATE TABLE `testimoni` (
   `id_iklan` int(10) DEFAULT NULL,
   PRIMARY KEY (`id_testi`),
   KEY `ibfk_testi_1` (`id_user`),
-  KEY `id_iklan` (`id_iklan`),
-  CONSTRAINT `testimoni_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `profileuser` (`id`),
-  CONSTRAINT `testimoni_ibfk_2` FOREIGN KEY (`id_iklan`) REFERENCES `iklan` (`id_iklan`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+  KEY `testimoni_ibfk_2` (`id_iklan`),
+  CONSTRAINT `testimoni_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `profileuser` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT `testimoni_ibfk_2` FOREIGN KEY (`id_iklan`) REFERENCES `iklan` (`id_iklan`) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `testimoni` */
 
@@ -91,10 +91,10 @@ CREATE TABLE `transaksi` (
   PRIMARY KEY (`id_transaksi`),
   KEY `idpembeli` (`idpembeli`),
   KEY `idpenjual` (`idiklan`),
-  KEY `idpenjual_2` (`idpenjual`),
-  CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`idpembeli`) REFERENCES `profileuser` (`id`),
-  CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`idiklan`) REFERENCES `iklan` (`id_iklan`),
-  CONSTRAINT `transaksi_ibfk_3` FOREIGN KEY (`idpenjual`) REFERENCES `profileuser` (`id`)
+  KEY `transaksi_ibfk_3` (`idpenjual`),
+  CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`idpembeli`) REFERENCES `profileuser` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`idiklan`) REFERENCES `iklan` (`id_iklan`) ON DELETE NO ACTION ON UPDATE CASCADE,
+  CONSTRAINT `transaksi_ibfk_3` FOREIGN KEY (`idpenjual`) REFERENCES `profileuser` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `transaksi` */
