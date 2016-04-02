@@ -46,6 +46,9 @@ error_reporting(0); // Turn off all error reporting
 							<div class="form-group">
 								<input class="form-control" name="idpenjual" type="hidden" value="{{Auth::user()->id}}">
 							</div>
+							<div class="form-group">
+								 <input type="file" id="exampleInputFile" name="file" />
+							</div>
 							{{csrf_field()}}
 						 <button class="btn btn-primary btn btn-block">Daftar</button>
 						</fieldset>

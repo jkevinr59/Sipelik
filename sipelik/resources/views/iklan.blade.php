@@ -5,6 +5,8 @@
 <a href="{{URL::to('logout')}}" class="button">Logout</a>
 <a href="{{URL::to('tambahbarang')}}" class="button">Buat Iklan</a>
 <a href="{{URL::to('editakun')}}" class="button">Edit Akun</a>
+<a href="{{URL::to('transaksibeli')}}">Transaksi Pembelian</a>
+<a href="{{URL::to('transaksijual')}}">Transaksi Penjualan</a>
 <!-- <a href="{{URL::to('hapusakun')}}/{{Auth::user()->id}}">Hapus Akun</a> -->
 @else
 <a href="{{URL::to('register')}}" class="button">Register</a>
@@ -20,6 +22,7 @@
     <td>Deskripsi</td>
     <td>Stok(kg)</td>
     <td>Penjual</td>
+    <td>gambar</td>
   </tr>
   <tr>
   	@foreach($iklan as $post)
@@ -29,6 +32,7 @@
     <td>{{$post->deskripsi_iklan}}</td>
     <td>{{$post->stok}}</td>
     <td>{{$post->nama_user}}</td>
+    <td> <?php $bukti=$post->gambar;?><img src="{{URL::to($bukti)}}" height="42" width="42">
     @endif
   </tr>
   @endforeach

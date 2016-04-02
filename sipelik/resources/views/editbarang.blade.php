@@ -44,6 +44,9 @@ error_reporting(0); // Turn off all error reporting
 								<input class="form-control" placeholder="Stok(kg) Baru" name="stok" type="text" value="">
 							</div>
 							<div class="form-group">
+								 <input type="file" id="exampleInputFile" name="file" />
+							</div>
+							<div class="form-group">
 								<input class="form-control" name="idiklan" type="hidden" value="{{$id}}">
 							</div>
 							{{csrf_field()}}

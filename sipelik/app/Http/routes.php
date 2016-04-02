@@ -32,7 +32,6 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('daftar','HomeController@daftar');
 	Route::get('masuk','HomeController@loginform');
 	Route::post('login','HomeController@login');
-	Route::get('test','HomeController@testo');
 	Route::get('logout','HomeController@logout');
 	Route::get('iklan','HomeController@iklan');
 	Route::get('tambahbarang','HomeController@tambahbarang');
@@ -42,10 +41,13 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('testimoniproses','HomeController@testimoniproses');
     Route::post('transaksi','HomeController@transaksi');
     Route::get('penjual/{id}','HomeController@penjual');
+    Route::get('lihatakun','HomeController@lihatakun');
     Route::get('editakun','HomeController@editakun');
     Route::post('editproses','HomeController@editproses');
-    Route::get('hapusakun/{id}','HomeController@hapusakun');
+    //Route::get('hapusakun/{id}','HomeController@hapusakun');
     Route::get('editbarang/{id}','HomeController@editbarang');
     Route::post('editbarangproses','HomeController@editbarangproses');
-    Route::get('hapusbarang/{id}','HomeController@hapusbarang');
+    //Route::get('hapusbarang/{id}','HomeController@hapusbarang');
+    Route::get('transaksibeli','HomeController@transaksibeli');
+    Route::get('transaksijual','HomeController@transaksijual');
 });
