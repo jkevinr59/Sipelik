@@ -32,11 +32,11 @@ CREATE TABLE `iklan` (
   PRIMARY KEY (`id_iklan`),
   KEY `idpenjual` (`idpenjual`),
   CONSTRAINT `iklan_ibfk_1` FOREIGN KEY (`idpenjual`) REFERENCES `profileuser` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 /*Data for the table `iklan` */
 
-insert  into `iklan`(`id_iklan`,`judul_iklan`,`harga`,`deskripsi_iklan`,`gambar`,`stok`,`idpenjual`,`status`) values (1,'ikan mas',2000,'kecil',NULL,5,1,1),(2,'cumi',10,'ampas',NULL,5,2,1),(4,'pari',20000,'beracun',NULL,20,1,1),(5,'nemo',3000,'badut',NULL,5,2,1);
+insert  into `iklan`(`id_iklan`,`judul_iklan`,`harga`,`deskripsi_iklan`,`gambar`,`stok`,`idpenjual`,`status`) values (1,'Udang',30000,'nikmat','uploads/2.jpg',20,1,1),(2,'cumi',10,'ampas',NULL,5,2,1),(4,'pari',20000,'beracun',NULL,20,1,1),(5,'nemo',3000,'badut',NULL,5,2,0),(7,'ikan hiu',9000,'ini ikan hiu','uploads/WP_20160123_010.jpg',90,1,0),(8,'ikan piranha',1000000,'ini ikan piranha','uploads/1.jpg',1222,1,0);
 
 /*Table structure for table `profileuser` */
 
@@ -57,7 +57,7 @@ CREATE TABLE `profileuser` (
 
 /*Data for the table `profileuser` */
 
-insert  into `profileuser`(`id`,`nama_user`,`alamat_user`,`no_telp`,`alamat_kirim`,`email`,`username`,`password`,`remember_token`) values (1,'Afif Ishamsyah','Bekasi','081383112806','Surabaya','afifhan95@gmail.com','minyman','$2y$10$kj1xnRHsLJ/ikfFgKGNkSuCkRQg5kSm/QH8LoBpXswATpMBRc7pIi','IiB3gCJJa0GqRMvwMIn3GZBfiyoLpEUGntzFPbibygk6a3AmaK2hn471RfpO'),(2,'anwar','bekasi','0888888888','almuslim','anwar@gmaill.com','anwar','$2y$10$Ug8I24zR76D0Nq.HE0IW5.5alH0IoJ9V5CbcDxqNyh4yLjd0Cq2EK','Y2zQaRGQUEJMTQkZyXrMqMt9g5nO0s34LKIqD7yn7hRbfv8oUq7QMKL70DuT');
+insert  into `profileuser`(`id`,`nama_user`,`alamat_user`,`no_telp`,`alamat_kirim`,`email`,`username`,`password`,`remember_token`) values (1,'Afif Ishamsyah','Bekasi','081383112806','Surabaya','afifhan95@gmail.com','minyman','$2y$10$kj1xnRHsLJ/ikfFgKGNkSuCkRQg5kSm/QH8LoBpXswATpMBRc7pIi','wEGuLqiQNxdqV8NzMN0wVL2SfNKEP4rU3T9JWoBraXLyukxqjRslvs0JRkKR'),(2,'anwar','bekasi','0888888888','almuslim','anwar@gmaill.com','anwar','$2y$10$Ug8I24zR76D0Nq.HE0IW5.5alH0IoJ9V5CbcDxqNyh4yLjd0Cq2EK','afokBVcrvv0kacrp7CK96LiyJeTCJp60xTVHk4dZbI0N07X7xZVnZ2yWNIKu'),(3,'yahya','Jakarta','0812345666','Surabaya','yahyasem@gmail.com','yahyasem','$2y$10$2wRkPHEgAIqm69kTuUoIkuJpaL.zvO63DsWjaHO3Hjh8j5M3AxjZK','qHDQrhSLHYemiHf3uf4QCEhxa3dK02ujfn4N9mt1FYMYii2Bdt1qs4fhHTSI');
 
 /*Table structure for table `testimoni` */
 
@@ -95,9 +95,11 @@ CREATE TABLE `transaksi` (
   CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`idpembeli`) REFERENCES `profileuser` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`idiklan`) REFERENCES `iklan` (`id_iklan`) ON DELETE NO ACTION ON UPDATE CASCADE,
   CONSTRAINT `transaksi_ibfk_3` FOREIGN KEY (`idpenjual`) REFERENCES `profileuser` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 /*Data for the table `transaksi` */
+
+insert  into `transaksi`(`id_transaksi`,`tanggal_terjual`,`idpembeli`,`idpenjual`,`idiklan`) values (1,'2016-04-01 16:50:09',1,2,5),(2,'2016-04-02 07:30:12',2,1,8),(4,'2016-04-02 10:14:17',3,1,7);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
