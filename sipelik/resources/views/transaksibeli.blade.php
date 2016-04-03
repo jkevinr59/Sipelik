@@ -15,8 +15,9 @@
 @if (Session::has('message'))
 <div class="alert alert-info">{{ Session::get('message') }}</div>
 @endif
-@if(empty($iklan))
-<h2>Tidak ada barang yang dijual</h2>
+
+@if(empty($transaksi))
+<h2>Anda belom melakukan pembelian apapun</h2>
 @else
 <table style="width:100%">
   <tr>
@@ -28,15 +29,13 @@
     <td>gambar</td>
   </tr>
   <tr>
-  	@foreach($iklan as $post)
-    @if($post->status==1)
+  	@foreach($transaksi as $post)
     <td><a href="{{URL::to('iklan_detail')}}/{{$post->id_iklan}}">{{$post->judul_iklan}}</a></td>
     <td>{{$post->harga}}</td>
     <td>{{$post->deskripsi_iklan}}</td>
     <td>{{$post->stok}}</td>
     <td>{{$post->nama_user}}</td>
     <td> <?php $bukti=$post->gambar;?><img src="{{URL::to($bukti)}}" height="42" width="42">
-    @endif
   </tr>
   @endforeach
 </table>

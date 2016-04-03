@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 //use Request;
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
-use App\Http\Requests;
+//use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
 use Auth;
@@ -17,6 +17,7 @@ use App\Iklan;
 use App\Testimoni;
 use App\Transaksi;
 use App\Profile;
+use Request;
 // use Input;
 
 
@@ -35,29 +36,37 @@ class HomeController extends controller{
     }
 	}
   //proses register
-	public function daftar(){
-		$data=Input::all();
-		if($data['password']==$data['conpassword'])
-		{
-        	$pass=bcrypt( $data['password']);
-        	Profile::insertGetId(array(
-           	 'username'=> $data['username'],
-           	 'password'=> $pass,
-           	 'nama_user'=> $data['nama'],
-           	 'no_telp'=> $data['telp'],
-           	 'alamat_user'=> $data['asal'],
-           	 'alamat_kirim'=> $data['kirim'],
-           	 'email'=> $data['email']
-          	 
-           	 ));
-         	return redirect('iklan');
-    }
-    else
+	public function daftar()
+  {
+    if(Request::isMethod('post'))
     {
-      Session::flash('message','konfirmasi password gagal');
-			return redirect('register');
+      $data=Input::all();
+  		if($data['password']==$data['conpassword'])
+  		{
+          	$pass=bcrypt( $data['password']);
+          	Profile::insertGetId(array(
+             	 'username'=> $data['username'],
+             	 'password'=> $pass,
+             	 'nama_user'=> $data['nama'],
+             	 'no_telp'=> $data['telp'],
+             	 'alamat_user'=> $data['asal'],
+             	 'alamat_kirim'=> $data['kirim'],
+             	 'email'=> $data['email']
+            	 
+             	 ));
+           	return redirect('iklan');
+      }
+      else
+      {
+        Session::flash('message','konfirmasi password gagal');
+  			return redirect('register');
+      }
     }
-	}
+    elseif(Request::isMethod('get'))
+    {
+      return redirect('iklan');
+    }
+  }
 
   //form login
   public function loginform()
@@ -75,29 +84,26 @@ class HomeController extends controller{
   //proses login
   public function login()
   {
-            
-    // $credentials = Input::only('username','password');
-    $new = Input::only('username','password');
-    // $this->data['username'] = Input::get('username');
-            
-    // dd($credentials);
+    if(Request::isMethod('post'))
+    {
+      $new = Input::only('username','password');
+  
+      if (Auth::attempt($new,true))
+      {
 
-    if (Auth::attempt($new,true))
-    {
-      //if(Auth::role()==1)
-      // return 'asdf';
-      $id=Auth::user()->id;
-      //return view('tes');
-      return redirect('iklan');
-      // echo $id;
-      //return 'asdfjhdsafasdf';
+        $id=Auth::user()->id;
+        return redirect('iklan');
+      }
+        else
+      {
+        Session::flash('message','Login anda gagal, silahkan cek kembali username dan password');
+        return redirect('masuk');
+      }
     }
-    else
+    elseif(Request::isMethod('get'))
     {
-      Session::flash('message','Login anda gagal, silahkan cek kembali username dan password');
-      return redirect('masuk');
+      return redirect('iklan');
     } 
-            // return redirect('loginadmin');
   }
     
   //masuk katalog
@@ -121,34 +127,41 @@ class HomeController extends controller{
 
   //proses pembuatan iklan
   public function tambahbarangproses(){
-    $data=Input::all();
-      $rules = array(
-            'file' => 'image|max:3000',
-        );
-    
-       // PASS THE INPUT AND RULES INTO THE VALIDATOR
-        $validation = Validator::make($data, $rules);
-           $file = array_get($data,'file');
-           // SET UPLOAD PATH
-            $destinationPath = 'uploads';
-            // GET THE FILE EXTENSION
-            $extension = $file->getClientOriginalExtension();
-            $nama= $file->getClientOriginalName();
+    if(Request::isMethod('post'))
+    {
+      $data=Input::all();
+        $rules = array(
+              'file' => 'image|max:3000',
+          );
+      
+         // PASS THE INPUT AND RULES INTO THE VALIDATOR
+          $validation = Validator::make($data, $rules);
+             $file = array_get($data,'file');
+             // SET UPLOAD PATH
+              $destinationPath = 'uploads';
+              // GET THE FILE EXTENSION
+              $extension = $file->getClientOriginalExtension();
+              $nama= $file->getClientOriginalName();
 
-            // RENAME THE UPLOAD WITH RANDOM NUMBER
-            $fileName = $nama; 
-            // MOVE THE UPLOADED FILES TO THE DESTINATION DIRECTORY
-            $upload_success = $file->move($destinationPath, $fileName);
-            $filepath = $destinationPath . '/' . $nama;
-    Iklan::insertGetId(array(
-    'judul_iklan'=> $data['judul'],
-    'harga'=> $data['harga'],
-    'deskripsi_iklan'=> $data['deskripsi'],
-    'stok'=> $data['stok'],
-    'gambar'=>$filepath,
-    'idpenjual'=> $data['idpenjual']));
-   
-    return redirect('iklan');
+              // RENAME THE UPLOAD WITH RANDOM NUMBER
+              $fileName = $nama; 
+              // MOVE THE UPLOADED FILES TO THE DESTINATION DIRECTORY
+              $upload_success = $file->move($destinationPath, $fileName);
+              $filepath = $destinationPath . '/' . $nama;
+      Iklan::insertGetId(array(
+      'judul_iklan'=> $data['judul'],
+      'harga'=> $data['harga'],
+      'deskripsi_iklan'=> $data['deskripsi'],
+      'stok'=> $data['stok'],
+      'gambar'=>$filepath,
+      'idpenjual'=> $data['idpenjual']));
+     
+      return redirect('iklan');
+    }
+    elseif(Request::isMethod('get'))
+    {
+      return redirect('iklan');
+    } 
   }
 
   //proses logout
@@ -225,36 +238,50 @@ class HomeController extends controller{
 
   //proses testimoni
   public function testimoniproses(){
-    $data=Input::all();
-    Testimoni::insertGetId(array(
-    'isi'=> $data['testimoni'],
-    'score'=> $data['score'],
-    'id_user'=> $data['iduser'],
-    'id_iklan'=> $data['idiklan']));
-    $id = $data['idiklan'];
-    $dataa=array();
-    $dataa['iklan']=DB::table('iklan')->join('profileuser','iklan.idpenjual','=','profileuser.id')->select('iklan.*','profileuser.nama_user')->where('iklan.id_iklan','=',$id)->get();
-    Session::flash('message','Terima kasih atas testimoni anda');
-    return view('anwar',$dataa);
+    if(Request::isMethod('post'))
+    {
+      $data=Input::all();
+      Testimoni::insertGetId(array(
+      'isi'=> $data['testimoni'],
+      'score'=> $data['score'],
+      'id_user'=> $data['iduser'],
+      'id_iklan'=> $data['idiklan']));
+      $id = $data['idiklan'];
+      $dataa=array();
+      $dataa['iklan']=DB::table('iklan')->join('profileuser','iklan.idpenjual','=','profileuser.id')->select('iklan.*','profileuser.nama_user')->where('iklan.id_iklan','=',$id)->get();
+      Session::flash('message','Terima kasih atas testimoni anda');
+      return view('anwar',$dataa);
+    }
+    elseif(Request::isMethod('get'))
+    {
+      return redirect('iklan');
+    }
   }
 
   //proses pembelian
    public function transaksi(){
-    $data=Input::all();
-    Transaksi::insertGetId(array(
-    'tanggal_terjual'=> $data['tanggal'],
-    'idpembeli'=> $data['idpembeli'],
-    'idpenjual'=> $data['idpenjual'],
-    'idiklan'=> $data['idiklan']));
+    if(Request::isMethod('post'))
+    {
+      $data=Input::all();
+      Transaksi::insertGetId(array(
+      'tanggal_terjual'=> $data['tanggal'],
+      'idpembeli'=> $data['idpembeli'],
+      'idpenjual'=> $data['idpenjual'],
+      'idiklan'=> $data['idiklan']));
 
-    $id = $data['idiklan'];
-    $url = $data['url'];
+      $id = $data['idiklan'];
+      $url = $data['url'];
 
-    DB::table('iklan')
-            ->where('id_iklan', $id)
-            ->update(['status' => 0]);
-    Session::flash('message','Pembelian selesai. Klik data penjual untuk melihat informasi penjual, atau klik testimoni untuk mengisi testimoni singkat');
-    return Redirect::to($url);
+      DB::table('iklan')
+              ->where('id_iklan', $id)
+              ->update(['status' => 0]);
+      Session::flash('message','Pembelian selesai. Klik data penjual untuk melihat informasi penjual, atau klik testimoni untuk mengisi testimoni singkat');
+      return Redirect::to($url);
+    }
+     elseif(Request::isMethod('get'))
+    {
+      return redirect('iklan');
+    }
   }
 
   //data penjual
@@ -313,20 +340,27 @@ class HomeController extends controller{
 
   //proses edit akun
   public function editproses(){
-    $data=Input::all();
+    if(Request::isMethod('post'))
+    {
+      $data=Input::all();
 
-    if($data['password']==$data['conpassword'])
-    {
-          $pass=bcrypt( $data['password']);
-          DB::table('profileuser')
-            ->where('id', $data['idakun'])
-            ->update(['username' => $data['username'], 'password' => $pass, 'nama_user' => $data['nama'],'alamat_user' => $data['asal'], 'no_telp' => $data['telp'], 'alamat_kirim' => $data['kirim'],'email' => $data['email']]);
-          Session::flash('message','Berhasil edit akun');
-          return redirect('iklan');
+      if($data['password']==$data['conpassword'])
+      {
+            $pass=bcrypt( $data['password']);
+            DB::table('profileuser')
+              ->where('id', $data['idakun'])
+              ->update(['username' => $data['username'], 'password' => $pass, 'nama_user' => $data['nama'],'alamat_user' => $data['asal'], 'no_telp' => $data['telp'], 'alamat_kirim' => $data['kirim'],'email' => $data['email']]);
+            Session::flash('message','Berhasil edit akun');
+            return redirect('iklan');
+      }
+      else
+      {
+        Session::flash('message','konfirmasi password gagal, akun gagal diedit');
+        return redirect('iklan');
+      }
     }
-    else
+    elseif(Request::isMethod('get'))
     {
-      Session::flash('message','konfirmasi password gagal, akun gagal diedit');
       return redirect('iklan');
     }
   }
@@ -355,31 +389,38 @@ class HomeController extends controller{
 
   //proses edit barang
   public function editbarangproses(){
-    $data=Input::all();
-     $rules = array(
-            'file' => 'image|max:3000',
-        );
-    
-       // PASS THE INPUT AND RULES INTO THE VALIDATOR
-        $validation = Validator::make($data, $rules);
-           $file = array_get($data,'file');
-           // SET UPLOAD PATH
-            $destinationPath = 'uploads';
-            // GET THE FILE EXTENSION
-            $extension = $file->getClientOriginalExtension();
-            $nama= $file->getClientOriginalName();
+    if(Request::isMethod('post'))
+    {
+      $data=Input::all();
+       $rules = array(
+              'file' => 'image|max:3000',
+          );
+      
+         // PASS THE INPUT AND RULES INTO THE VALIDATOR
+          $validation = Validator::make($data, $rules);
+             $file = array_get($data,'file');
+             // SET UPLOAD PATH
+              $destinationPath = 'uploads';
+              // GET THE FILE EXTENSION
+              $extension = $file->getClientOriginalExtension();
+              $nama= $file->getClientOriginalName();
 
-            // RENAME THE UPLOAD WITH RANDOM NUMBER
-            $fileName = $nama; 
-            // MOVE THE UPLOADED FILES TO THE DESTINATION DIRECTORY
-            $upload_success = $file->move($destinationPath, $fileName);
-            $filepath = $destinationPath . '/' . $nama;
-    DB::table('iklan')
-        ->where('id_iklan', $data['idiklan'])
-        ->update(['gambar'=> $filepath, 'judul_iklan' => $data['judul'], 'harga' => $data['harga'], 'deskripsi_iklan' => $data['deskripsi'],'stok' => $data['stok']]);
-    Session::flash('message','Berhasil edit barang');
-    return redirect('iklan');
+              // RENAME THE UPLOAD WITH RANDOM NUMBER
+              $fileName = $nama; 
+              // MOVE THE UPLOADED FILES TO THE DESTINATION DIRECTORY
+              $upload_success = $file->move($destinationPath, $fileName);
+              $filepath = $destinationPath . '/' . $nama;
+      DB::table('iklan')
+          ->where('id_iklan', $data['idiklan'])
+          ->update(['gambar'=> $filepath, 'judul_iklan' => $data['judul'], 'harga' => $data['harga'], 'deskripsi_iklan' => $data['deskripsi'],'stok' => $data['stok']]);
+      Session::flash('message','Berhasil edit barang');
+      return redirect('iklan');
     }
+      elseif(Request::isMethod('get'))
+    {
+      return redirect('iklan');
+    }
+  }
 
   public function transaksibeli()
   {
