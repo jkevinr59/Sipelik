@@ -32,7 +32,7 @@ class HomeController extends controller{
     }
     else
     {
-      return redirect('iklan');
+      return redirect('/');
     }
 	}
   //proses register
@@ -54,7 +54,7 @@ class HomeController extends controller{
              	 'email'=> $data['email']
             	 
              	 ));
-           	return redirect('iklan');
+           	return redirect('/');
       }
       else
       {
@@ -64,7 +64,7 @@ class HomeController extends controller{
     }
     elseif(Request::isMethod('get'))
     {
-      return redirect('iklan');
+      return redirect('/');
     }
   }
 
@@ -77,7 +77,7 @@ class HomeController extends controller{
     }
     else
     {
-      return redirect('iklan');
+      return redirect('/');
     }
   }
 
@@ -92,7 +92,7 @@ class HomeController extends controller{
       {
 
         $id=Auth::user()->id;
-        return redirect('iklan');
+        return redirect('/');
       }
         else
       {
@@ -102,7 +102,7 @@ class HomeController extends controller{
     }
     elseif(Request::isMethod('get'))
     {
-      return redirect('iklan');
+      return redirect('/');
     } 
   }
     
@@ -121,7 +121,7 @@ class HomeController extends controller{
     }
     else
     {
-      return redirect('iklan');
+      return redirect('/');
     }
   }
 
@@ -156,11 +156,11 @@ class HomeController extends controller{
       'gambar'=>$filepath,
       'idpenjual'=> $data['idpenjual']));
      
-      return redirect('iklan');
+      return redirect('/');
     }
     elseif(Request::isMethod('get'))
     {
-      return redirect('iklan');
+      return redirect('/');
     } 
   }
 
@@ -168,7 +168,7 @@ class HomeController extends controller{
   public function logout()
   {
     Auth::logout();
-    return redirect('iklan');
+    return redirect('/');
   }
 
   //masuk detail barang
@@ -186,7 +186,7 @@ class HomeController extends controller{
       }
       elseif($status0)
       {
-        return redirect('iklan');
+        return redirect('/');
       }
     }
     elseif(Auth::check()) 
@@ -209,7 +209,7 @@ class HomeController extends controller{
         }
         else
         {
-          return redirect('iklan');
+          return redirect('/');
         }
       }
     }
@@ -227,12 +227,12 @@ class HomeController extends controller{
       }
       else
       {
-        return redirect('iklan');
+        return redirect('/');
       }
     }
     else
     {
-      return redirect('iklan');
+      return redirect('/');
     }
   }
 
@@ -254,7 +254,7 @@ class HomeController extends controller{
     }
     elseif(Request::isMethod('get'))
     {
-      return redirect('iklan');
+      return redirect('/');
     }
   }
 
@@ -280,7 +280,7 @@ class HomeController extends controller{
     }
      elseif(Request::isMethod('get'))
     {
-      return redirect('iklan');
+      return redirect('/');
     }
   }
 
@@ -305,12 +305,12 @@ class HomeController extends controller{
       }
       else
       {
-        return redirect('iklan');
+        return redirect('/');
       }
     }
     else
     {
-      return redirect('iklan');
+      return redirect('/');
     }
   }
 
@@ -322,7 +322,7 @@ class HomeController extends controller{
     }
     else
     {
-      return redirect('iklan');
+      return redirect('/');
     }
   }
 
@@ -334,7 +334,7 @@ class HomeController extends controller{
     }
     else
     {
-      return redirect('iklan');
+      return redirect('/');
     }
   }
 
@@ -351,17 +351,17 @@ class HomeController extends controller{
               ->where('id', $data['idakun'])
               ->update(['username' => $data['username'], 'password' => $pass, 'nama_user' => $data['nama'],'alamat_user' => $data['asal'], 'no_telp' => $data['telp'], 'alamat_kirim' => $data['kirim'],'email' => $data['email']]);
             Session::flash('message','Berhasil edit akun');
-            return redirect('iklan');
+            return redirect('/');
       }
       else
       {
         Session::flash('message','konfirmasi password gagal, akun gagal diedit');
-        return redirect('iklan');
+        return redirect('/');
       }
     }
     elseif(Request::isMethod('get'))
     {
-      return redirect('iklan');
+      return redirect('/');
     }
   }
 
@@ -378,12 +378,12 @@ class HomeController extends controller{
       }
       else
       {
-        return redirect('iklan');
+        return redirect('/');
       }
     }
      else
     {
-      return redirect('iklan');
+      return redirect('/');
     }
   }
 
@@ -414,11 +414,11 @@ class HomeController extends controller{
           ->where('id_iklan', $data['idiklan'])
           ->update(['gambar'=> $filepath, 'judul_iklan' => $data['judul'], 'harga' => $data['harga'], 'deskripsi_iklan' => $data['deskripsi'],'stok' => $data['stok']]);
       Session::flash('message','Berhasil edit barang');
-      return redirect('iklan');
+      return redirect('/');
     }
       elseif(Request::isMethod('get'))
     {
-      return redirect('iklan');
+      return redirect('/');
     }
   }
 
@@ -435,7 +435,7 @@ class HomeController extends controller{
     }
     else
     {
-      return redirect('iklan');
+      return redirect('/');
     }
   }
 
@@ -452,7 +452,7 @@ class HomeController extends controller{
     }
     else
     {
-      return redirect('iklan');
+      return redirect('/');
     }
   }
 
@@ -467,12 +467,12 @@ class HomeController extends controller{
       }
       else
       {
-        return redirect('iklan');
+        return redirect('/');
       }
     }
     else
     {
-      return redirect('iklan');
+      return redirect('/');
     }
   }*/
 
@@ -484,16 +484,16 @@ class HomeController extends controller{
       {
         DB::table('iklan')->where('iklan.id_iklan','=',$id)->delete();
         Session::flash('message','Barang telah dihapus');
-        return redirect('iklan');
+        return redirect('/');
       }
       else
       {
-        return redirect('iklan');
+        return redirect('/');
       }
     }
     else
     {
-      return redirect('iklan');
+      return redirect('/');
     }
   }*/
 

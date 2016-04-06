@@ -1,5 +1,5 @@
 <html>
-<a href="{{URL::to('iklan')}}" class="button">Katalog</a>
+<a href="{{URL::to('/')}}" class="button">Katalog</a>
 @if(Auth::check())
 <h4>{{Auth::user()->username}}</h4>
 <a href="{{URL::to('logout')}}" class="button">Logout</a>

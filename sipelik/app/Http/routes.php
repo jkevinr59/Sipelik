@@ -35,7 +35,7 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('login','HomeController@login');
     Route::get('login','HomeController@login');
 	Route::get('logout','HomeController@logout');
-	Route::get('iklan','HomeController@iklan');
+	Route::get('/','HomeController@iklan');
 	Route::get('tambahbarang','HomeController@tambahbarang');
 	Route::post('tambahbarangproses','HomeController@tambahbarangproses');
     Route::get('tambahbarangproses','HomeController@tambahbarangproses');

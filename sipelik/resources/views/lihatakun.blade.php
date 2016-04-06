@@ -1,5 +1,5 @@
 <html>
-<a href="{{URL::to('iklan')}}" class="button">Katalog</a>
+<a href="{{URL::to('/')}}" class="button">Katalog</a>
 <a href="{{URL::to('logout')}}" class="button">Logout</a>
 <a href="{{URL::to('tambahbarang')}}" class="button">Buat Iklan</a>
 <a href="{{URL::to('editakun')}}" class="button">Edit Akun</a>
