@@ -1,0 +1,5 @@
+Untuk Bab 2:
+	Ini untuk Bab 2 kenapa kamu mbuat sistem kita kok Mobile kan harusnya web browser 
+
+Untuk Diagram 
+	Dewi untuk nama Controller dan Database nya ambigu ,jgn cuma Database dan Controller tp harus ada keterangan detailnya contoh :Kontrol Iklan,Database Iklan
